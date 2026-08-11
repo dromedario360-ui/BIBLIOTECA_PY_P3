@@ -14,6 +14,11 @@ def listar_prestamos():
     return service.listar()
 
 
+@router.get("/activos", response_model=List[PrestamoRespuesta])
+def listar_prestamos_activos():
+    return [p for p in service.listar() if not p.devuelto]
+
+
 @router.post("/", response_model=PrestamoRespuesta, status_code=201)
 def crear_prestamo(datos: PrestamoCrear):
     try:
