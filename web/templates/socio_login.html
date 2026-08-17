@@ -1,0 +1,27 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi cuenta - Biblioteca ITLA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/estilos.css?v=4">
+</head>
+<body class="pagina-login">
+    <div class="tarjeta-login">
+        <h1>Biblioteca ITLA</h1>
+        <p class="subtitulo">Acceso de socios</p>
+        <form method="post" action="/socio/login">
+            <div class="campo">
+                <label for="correo">Correo registrado</label>
+                <input type="email" id="correo" name="correo" required autofocus placeholder="tucorreo@ejemplo.com">
+            </div>
+            <button type="submit" class="boton-principal">Entrar</button>
+        </form>
+        {% if error %}
+        <p class="mensaje-error">{{ error }}</p>
+        {% endif %}
+        <p class="pista"><a href="/catalogo">Volver al catalogo</a></p>
+    </div>
+</body>
+</html>

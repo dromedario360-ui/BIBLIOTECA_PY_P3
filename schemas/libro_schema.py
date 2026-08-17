@@ -8,6 +8,7 @@ class LibroBase(BaseModel):
     isbn: str
     categoria: Optional[str] = None
     stock: int = 1
+    precio: float = 0
 
 
 class LibroCrear(LibroBase):

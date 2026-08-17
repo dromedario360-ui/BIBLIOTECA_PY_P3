@@ -1,5 +1,6 @@
-﻿from sqlalchemy import Column, Integer, String, Boolean
+﻿from sqlalchemy import Column, Integer, String, Boolean, Float
 from database.conexion import Base
+
 
 class Libro(Base):
     __tablename__ = "libros"
@@ -11,6 +12,7 @@ class Libro(Base):
     stock = Column(Integer, nullable=False, default=0)
     disponible = Column(Boolean, nullable=False, default=True)
     imagen = Column(String, nullable=True)
+    precio = Column(Float, nullable=False, default=0)
 
     def __repr__(self):
         return f"<Libro: {self.titulo} ({self.autor})>"
