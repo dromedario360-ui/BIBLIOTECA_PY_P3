@@ -21,6 +21,7 @@ class LibroActualizar(LibroBase):
 class LibroRespuesta(LibroBase):
     id: int
     disponible: bool
+    imagen: Optional[str] = None
 
     class Config:
         from_attributes = True

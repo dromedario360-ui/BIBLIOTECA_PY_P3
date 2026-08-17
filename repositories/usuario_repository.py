@@ -21,5 +21,9 @@ class IUsuarioRepository(ABC):
         pass
 
     @abstractmethod
+    def actualizar_foto(self, usuario_id: int, ruta_foto: str) -> Optional[Usuario]:
+        pass
+
+    @abstractmethod
     def eliminar(self, usuario_id: int) -> bool:
         pass

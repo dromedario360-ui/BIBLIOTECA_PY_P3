@@ -18,6 +18,7 @@ class UsuarioActualizar(UsuarioBase):
 
 class UsuarioRespuesta(UsuarioBase):
     id: int
+    foto: Optional[str] = None
 
     class Config:
         from_attributes = True

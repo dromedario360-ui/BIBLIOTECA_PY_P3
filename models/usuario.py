@@ -8,6 +8,7 @@ class Usuario(Base):
     nombre = Column(String, nullable=False)
     correo = Column(String, nullable=False, unique=True)
     telefono = Column(String, nullable=True)
+    foto = Column(String, nullable=True)
 
     def __repr__(self):
         return f"<Usuario: {self.nombre}>"

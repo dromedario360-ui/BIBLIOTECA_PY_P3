@@ -43,6 +43,16 @@ class LibroRepositorySQLAlchemy(ILibroRepository):
             db.refresh(existente)
             return existente
 
+    def actualizar_imagen(self, libro_id: int, ruta_imagen: str) -> Optional[Libro]:
+        with SessionLocal() as db:
+            existente = db.query(Libro).filter(Libro.id == libro_id).first()
+            if not existente:
+                return None
+            existente.imagen = ruta_imagen
+            db.commit()
+            db.refresh(existente)
+            return existente
+
     def eliminar(self, libro_id: int) -> bool:
         with SessionLocal() as db:
             libro = db.query(Libro).filter(Libro.id == libro_id).first()

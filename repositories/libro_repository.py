@@ -25,5 +25,9 @@ class ILibroRepository(ABC):
         pass
 
     @abstractmethod
+    def actualizar_imagen(self, libro_id: int, ruta_imagen: str) -> Optional[Libro]:
+        pass
+
+    @abstractmethod
     def eliminar(self, libro_id: int) -> bool:
         pass

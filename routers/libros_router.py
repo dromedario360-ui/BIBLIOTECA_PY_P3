@@ -1,5 +1,6 @@
-﻿from fastapi import APIRouter, HTTPException
+﻿from fastapi import APIRouter, HTTPException, UploadFile, File
 from typing import List, Optional
+import os, uuid
 from models.libro import Libro
 from schemas.libro_schema import LibroCrear, LibroActualizar, LibroRespuesta
 from services.libro_service import LibroService
@@ -7,6 +8,8 @@ from repositories.libro_repository_sqlalchemy import LibroRepositorySQLAlchemy
 
 router = APIRouter(prefix="/libros", tags=["Libros"])
 service = LibroService(LibroRepositorySQLAlchemy())
+
+CARPETA_IMAGENES = "web/static/uploads/libros"
 
 
 @router.get("/", response_model=List[LibroRespuesta])
@@ -37,6 +40,20 @@ def actualizar_libro(libro_id: int, datos: LibroActualizar):
     if not actualizado:
         raise HTTPException(status_code=404, detail="Libro no encontrado")
     return actualizado
+
+
+@router.post("/{libro_id}/imagen", response_model=LibroRespuesta)
+def subir_imagen_libro(libro_id: int, archivo: UploadFile = File(...)):
+    if not service.obtener(libro_id):
+        raise HTTPException(status_code=404, detail="Libro no encontrado")
+    extension = os.path.splitext(archivo.filename)[1]
+    nombre_archivo = f"libro_{libro_id}_{uuid.uuid4().hex[:8]}{extension}"
+    ruta_completa = os.path.join(CARPETA_IMAGENES, nombre_archivo)
+    os.makedirs(CARPETA_IMAGENES, exist_ok=True)
+    with open(ruta_completa, "wb") as f:
+        f.write(archivo.file.read())
+    ruta_publica = f"/static/uploads/libros/{nombre_archivo}"
+    return service.actualizar_imagen(libro_id, ruta_publica)
 
 
 @router.delete("/{libro_id}", status_code=204)

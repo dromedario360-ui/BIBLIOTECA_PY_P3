@@ -22,5 +22,8 @@ class LibroService:
     def actualizar(self, libro: Libro) -> Optional[Libro]:
         return self.repositorio.actualizar(libro)
 
+    def actualizar_imagen(self, libro_id: int, ruta_imagen: str) -> Optional[Libro]:
+        return self.repositorio.actualizar_imagen(libro_id, ruta_imagen)
+
     def eliminar(self, libro_id: int) -> bool:
         return self.repositorio.eliminar(libro_id)
