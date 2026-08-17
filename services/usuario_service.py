@@ -19,5 +19,8 @@ class UsuarioService:
     def actualizar(self, usuario: Usuario) -> Optional[Usuario]:
         return self.repositorio.actualizar(usuario)
 
+    def actualizar_foto(self, usuario_id: int, ruta_foto: str) -> Optional[Usuario]:
+        return self.repositorio.actualizar_foto(usuario_id, ruta_foto)
+
     def eliminar(self, usuario_id: int) -> bool:
         return self.repositorio.eliminar(usuario_id)
