@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Mi cuenta - Biblioteca ITLA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/estilos.css?v=4">
+</head>
+<body class="pagina-cliente">
+    <header class="encabezado-cliente">
+        <h1>Biblioteca ITLA</h1>
+        <nav>
+            <a href="/catalogo" class="enlace-nav">Catalogo</a>
+            <a href="/socio/logout" class="enlace-nav boton-nav">Cerrar sesion</a>
+        </nav>
+    </header>
+
+    <main class="contenedor-perfil-socio">
+        <div class="tarjeta-perfil-socio">
+            <form method="post" action="/socio/foto" enctype="multipart/form-data" id="form-foto-socio">
+                <label for="input-foto-socio" class="envoltorio-avatar-editable">
+                    {% if socio.foto %}
+                    <img src="{{ socio.foto }}" class="avatar-socio-grande">
+                    {% else %}
+                    <div class="avatar-socio-grande avatar-vacio">Sin foto</div>
+                    {% endif %}
+                    <span class="capa-editar-avatar">Cambiar foto</span>
+                </label>
+                <input type="file" id="input-foto-socio" name="archivo" accept="image/*" style="display:none;" onchange="document.getElementById('form-foto-socio').submit()">
+            </form>
+            <h2>{{ socio.nombre }}</h2>
+            <p>{{ socio.correo }}</p>
+            <p>{{ socio.telefono or "Sin telefono registrado" }}</p>
+        </div>
+
+        <h3 class="titulo-seccion">Mis prestamos</h3>
+        {% if prestamos %}
+        <table class="tabla-prestamos-socio">
+            <thead><tr><th>Libro</th><th>Fecha de prestamo</th><th>Estado</th></tr></thead>
+            <tbody>
+                {% for item in prestamos %}
+                <tr>
+                    <td>{{ item.libro.titulo if item.libro else "Libro eliminado" }}</td>
+                    <td>{{ item.prestamo.fecha_prestamo.strftime("%d/%m/%Y %H:%M") }}</td>
+                    <td>
+                        {% if item.prestamo.devuelto %}
+                        <span class="etiqueta-disponible">Devuelto</span>
+                        {% else %}
+                        <span class="etiqueta-no-disponible">Prestado</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="sin-resultados">Aun no tienes prestamos registrados.</p>
+        {% endif %}
+
+        <h3 class="titulo-seccion">Mis compras</h3>
+        {% if compras %}
+        <table class="tabla-prestamos-socio">
+            <thead><tr><th>Libro</th><th>Fecha de compra</th><th>Precio</th></tr></thead>
+            <tbody>
+                {% for item in compras %}
+                <tr>
+                    <td>{{ item.libro.titulo if item.libro else "Libro eliminado" }}</td>
+                    <td>{{ item.compra.fecha_compra.strftime("%d/%m/%Y %H:%M") }}</td>
+                    <td>${{ "%.2f"|format(item.compra.precio) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p class="sin-resultados">Aun no has comprado ningun libro.</p>
+        {% endif %}
+    </main>
+</body>
+</html>

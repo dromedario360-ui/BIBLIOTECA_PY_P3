@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Catalogo - Biblioteca ITLA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/estilos.css?v=4">
+</head>
+<body class="pagina-cliente">
+    <header class="encabezado-cliente">
+        <h1>Biblioteca ITLA</h1>
+        <nav>
+            <a href="/catalogo" class="enlace-nav">Catalogo</a>
+            {% if sesion_activa %}
+            <a href="/socio/panel" class="enlace-nav boton-nav">Mi perfil</a>
+            {% else %}
+            <a href="/socio/login" class="enlace-nav boton-nav">Mi cuenta</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <div class="franja-busqueda">
+        <form method="get" action="/catalogo" class="formulario-busqueda">
+            <input type="text" name="q" placeholder="Buscar por titulo, autor o categoria..." value="{{ q }}">
+            <button type="submit" class="boton-principal boton-ancho-auto">Buscar</button>
+        </form>
+    </div>
+
+    <main class="grilla-catalogo">
+        {% for libro in libros %}
+        <div class="tarjeta-libro">
+            {% if libro.imagen %}
+            <img src="{{ libro.imagen }}" class="portada-catalogo">
+            {% else %}
+            <div class="portada-catalogo portada-vacia">Sin portada</div>
+            {% endif %}
+            <div class="info-libro">
+                <h3>{{ libro.titulo }}</h3>
+                <p class="autor-libro">{{ libro.autor }}</p>
+                <p class="categoria-libro">{{ libro.categoria or "Sin categoria" }}</p>
+                {% if libro.disponible %}
+                <span class="etiqueta-disponible">Disponible ({{ libro.stock }})</span>
+                {% else %}
+                <span class="etiqueta-no-disponible">No disponible</span>
+                {% endif %}
+                <div class="fila-precio-compra">
+                    <span class="precio-libro">${{ "%.2f"|format(libro.precio) }}</span>
+                    {% if sesion_activa %}
+                    <form method="post" action="/socio/comprar/{{ libro.id }}">
+                        <button type="submit" class="boton-comprar">Comprar</button>
+                    </form>
+                    {% else %}
+                    <a href="/socio/login" class="boton-comprar boton-comprar-enlace">Comprar</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <p class="sin-resultados">No se encontraron libros.</p>
+        {% endfor %}
+    </main>
+</body>
+</html>

@@ -2,7 +2,7 @@
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import RedirectResponse
 from database.conexion import crear_base_datos
-from routers import libros_router, usuarios_router, prestamos_router, web_router
+from routers import libros_router, usuarios_router, prestamos_router, web_router, cliente_router, compras_router
 
 app = FastAPI(
     title="Sistema de Gestion de Biblioteca",
@@ -18,8 +18,10 @@ app.include_router(libros_router.router)
 app.include_router(usuarios_router.router)
 app.include_router(prestamos_router.router)
 app.include_router(web_router.router)
+app.include_router(cliente_router.router)
+app.include_router(compras_router.router)
 
 
 @app.get("/")
 def raiz():
-    return RedirectResponse(url="/login")
+    return RedirectResponse(url="/catalogo")

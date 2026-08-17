@@ -15,6 +15,7 @@ def crear_base_datos():
     from models.libro import Libro
     from models.usuario import Usuario
     from models.prestamo import Prestamo
+    from models.compra import Compra
     Base.metadata.create_all(engine)
 
 
