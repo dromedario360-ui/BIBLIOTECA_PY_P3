@@ -32,6 +32,16 @@ class UsuarioRepositorySQLAlchemy(IUsuarioRepository):
             db.refresh(existente)
             return existente
 
+    def actualizar_foto(self, usuario_id: int, ruta_foto: str) -> Optional[Usuario]:
+        with SessionLocal() as db:
+            existente = db.query(Usuario).filter(Usuario.id == usuario_id).first()
+            if not existente:
+                return None
+            existente.foto = ruta_foto
+            db.commit()
+            db.refresh(existente)
+            return existente
+
     def eliminar(self, usuario_id: int) -> bool:
         with SessionLocal() as db:
             usuario = db.query(Usuario).filter(Usuario.id == usuario_id).first()

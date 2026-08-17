@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Panel del Bibliotecario</title>
+    <link rel="stylesheet" href="/static/css/estilos.css">
+</head>
+<body>
+    <header class="encabezado">
+        <h1>Biblioteca ITLA</h1>
+        <a href="/logout" class="boton-salir">Cerrar sesion</a>
+    </header>
+
+    <nav class="pestanas">
+        <button class="pestana activa" data-tab="libros">Libros</button>
+        <button class="pestana" data-tab="usuarios">Usuarios</button>
+        <button class="pestana" data-tab="prestamos">Prestamos</button>
+    </nav>
+
+    <section id="tab-libros" class="contenido-tab">
+        <h2>Catalogo de libros</h2>
+        <form id="form-libro" class="formulario">
+            <input type="hidden" id="libro-id">
+            <input type="text" id="libro-titulo" placeholder="Titulo" required>
+            <input type="text" id="libro-autor" placeholder="Autor" required>
+            <input type="text" id="libro-isbn" placeholder="ISBN" required>
+            <input type="text" id="libro-categoria" placeholder="Categoria">
+            <input type="number" id="libro-stock" placeholder="Stock" min="0" required>
+            <button type="submit" class="boton-principal">Guardar libro</button>
+            <button type="button" id="btn-cancelar-libro" class="boton-secundario" style="display:none;">Cancelar edicion</button>
+        </form>
+        <input type="text" id="buscar-libro" placeholder="Buscar por titulo, autor o categoria...">
+        <table id="tabla-libros">
+            <thead>
+                <tr><th>Portada</th><th>Titulo</th><th>Autor</th><th>Categoria</th><th>Stock</th><th>Disponible</th><th>Acciones</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section id="tab-usuarios" class="contenido-tab oculto">
+        <h2>Usuarios / Socios</h2>
+        <form id="form-usuario" class="formulario">
+            <input type="hidden" id="usuario-id">
+            <input type="text" id="usuario-nombre" placeholder="Nombre" required>
+            <input type="email" id="usuario-correo" placeholder="Correo" required>
+            <input type="text" id="usuario-telefono" placeholder="Telefono">
+            <button type="submit" class="boton-principal">Guardar usuario</button>
+            <button type="button" id="btn-cancelar-usuario" class="boton-secundario" style="display:none;">Cancelar edicion</button>
+        </form>
+        <table id="tabla-usuarios">
+            <thead><tr><th>Foto</th><th>Nombre</th><th>Correo</th><th>Telefono</th><th>Acciones</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <section id="tab-prestamos" class="contenido-tab oculto">
+        <h2>Prestamos</h2>
+        <form id="form-prestamo" class="formulario">
+            <select id="prestamo-libro" required></select>
+            <select id="prestamo-usuario" required></select>
+            <button type="submit" class="boton-principal">Registrar prestamo</button>
+        </form>
+        <p class="pista">Solo se muestran libros con stock disponible.</p>
+        <h3>Prestamos activos</h3>
+        <table id="tabla-prestamos">
+            <thead><tr><th>Libro</th><th>Usuario</th><th>Fecha prestamo</th><th>Accion</th></tr></thead>
+            <tbody></tbody>
+        </table>
+    </section>
+
+    <input type="file" id="input-imagen-libro" accept="image/*" style="display:none;">
+    <input type="file" id="input-foto-usuario" accept="image/*" style="display:none;">
+
+    <div id="mensaje-flotante" class="mensaje-flotante oculto"></div>
+
+    <script src="/static/js/panel.js?v=2?v=2"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Iniciar sesion - Biblioteca ITLA</title>
+    <link rel="stylesheet" href="/static/css/estilos.css">
+</head>
+<body class="pagina-login">
+    <div class="tarjeta-login">
+        <h1>Biblioteca ITLA</h1>
+        <p class="subtitulo">Panel del bibliotecario</p>
+        <form method="post" action="/login">
+            <div class="campo">
+                <label for="usuario">Usuario</label>
+                <input type="text" id="usuario" name="usuario" required autofocus>
+            </div>
+            <div class="campo">
+                <label for="password">Contrasena</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="boton-principal">Entrar</button>
+        </form>
+        {% if error %}
+        <p class="mensaje-error">{{ error }}</p>
+        {% endif %}
+        <p class="pista">Usuario: bibliotecario · Contrasena: biblioteca123</p>
+    </div>
+</body>
+</html>
